@@ -1,0 +1,17 @@
+
+  img {
+    width: 100px;   /* ancho fijo */
+    height: 100px;  /* alto fijo */
+    object-fit: contain; /* mantiene la proporción sin deformar */
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    gap: 10px; /* espacio entre imágenes */
+  }
+
+  .shop {
+    text-align: center;
+  }
