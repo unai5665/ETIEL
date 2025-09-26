@@ -23,13 +23,16 @@
   let numPrimeraPuerta;
 
   while (true) {
-    let  numero = prompt("¿Que número tiene la primera puerta?");
-    numPrimeraPuerta = parseInt(numero, 10); 
+    let numero = prompt("¿Qué número tiene la primera puerta? (20, 22, 24, 26 o 28)");
+    numPrimeraPuerta = parseInt(numero, 10);
 
-    if (!isNaN(numPrimeraPuerta) && numPrimeraPuerta >= 0) break;
-
-      alert("Debes escribir un número válido.");
+    // comprobamos que sea un número y que esté en la lista permitida
+    if (!isNaN(numPrimeraPuerta) && [20, 22, 24, 26, 28].includes(numPrimeraPuerta)) {
+      break; // número válido, salimos del bucle
+    } else {
+      alert("⚠️ Debes escribir un número válido (20, 22, 24, 26 o 28).");
     }
+  }
   
 
   console.log("Has dicho que el número de la primera puerta es " + numPrimeraPuerta + " .");
@@ -94,11 +97,16 @@ const IMG_NUMEROS = [
   "num22.png",
   "num24.png",
   "num26.png",
-  "num28.png"
+  "num28.png",
+  "num30.png",
+  "num32.png",
+  "num34.png",
+  "num36.png"
+
 ];
 
 const IMG_HORAS = [
-  "una.png","una.png", "dos.png", "tres.png", "cuatro.png", "cinco.png", "seis.png", "siete.png", "ocho.png", "nueve.png", "diez.png", "once.png", "doce.png"
+  "una.png", "dos.png", "tres.png", "cuatro.png", "cinco.png", "seis.png", "siete.png", "ocho.png", "nueve.png", "diez.png", "once.png", "doce.png"
 ];
 
 
@@ -126,8 +134,15 @@ const IMG_COCHE = "coche.png";
   // Fila 2: puertas
   html += '<div class="row second">';
   for (let i = 0; i < numTiendas; i++) {
-    html += `<div class="shop"><img src="${IMG_PUERTAS[i]}" alt="puerta"><img src="${IMG_NUMEROS[i]}" alt="número"></div>`;
+    let numeroPuerta = numPrimeraPuerta + i * 2; // calculamos el número real
+    let idx = [20, 22, 24, 26, 28, 30, 32, 34, 36].indexOf(numeroPuerta); // buscamos la posición en IMG_NUMEROS
+
+  html += `<div class="shop">
+      <img src="${IMG_PUERTAS[i]}" alt="puerta">
+      <img src="${IMG_NUMEROS[idx]}" alt="número ${numeroPuerta}">
+    </div>`;
   }
+
   html += '</div>';
 
   // Fila 3: escaparates y ofertas
@@ -139,7 +154,7 @@ const IMG_COCHE = "coche.png";
 
   // Fila 4: reloj y semáforo
   html += '<div class="row fourth">';
-  html += `<div class="clock"><img src="${IMG_HORAS[horaActual]}" alt="hora ${horaActual}"></div>`;
+  html += `<div class="clock"><img src="${IMG_HORAS[horaActual - 1]}" alt="hora ${horaActual}"></div>`;
   html += `<div class="traffic"><img src="${IMG_SEMAFORO[colorSemaforo]}" alt="semaforo ${colorSemaforo}"></div>`;
   html += '</div>';
 
