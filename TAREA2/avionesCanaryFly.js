@@ -47,5 +47,6 @@ class Plane {
 }
 
 // Crear el avión de esta aerolínea
-const binterPlane = new Plane("CanaryFly", 10, 6, 100);
+const binterPlane = new Plane("CanaryFly – Arrecife (ACE) → Madrid (MAD)", 10, 6, 100);
+
 binterPlane.showSeatsTable();

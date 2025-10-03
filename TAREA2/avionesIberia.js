@@ -47,5 +47,6 @@ class Plane {
 }
 
 // Crear el avión de esta aerolínea
-const binterPlane = new Plane("Iberia", 10, 6, 100);
+const binterPlane = new Plane("Iberia – Arrecife (ACE) → Madrid (MAD)", 10, 6, 100);
+
 binterPlane.showSeatsTable();

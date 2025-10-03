@@ -47,5 +47,5 @@ class Plane {
 }
 
 // Crear el avión de esta aerolínea
-const binterPlane = new Plane("Binter", 10, 6, 100);
+const binterPlane = new Plane("Binter – Arrecife (ACE) → Madrid (MAD)", 10, 6, 100);
 binterPlane.showSeatsTable();
