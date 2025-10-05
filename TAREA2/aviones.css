@@ -1,0 +1,98 @@
+body {
+      font-family: Arial, sans-serif;
+      background-color: #97c4ff; 
+      margin: 10%;
+      display: flex;
+      flex-direction: column; 
+      align-items: center;
+    }
+
+
+#logo {
+  position: fixed; /* lo fija arriba a la izquierda */
+  top: 15px;
+  left: 15px;
+}
+
+#logo img {
+  height: 100px;      /* tamaño del logo */
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+h2 {
+      text-align: center;
+      color: #111827; 
+      margin-top: 25px;
+      font-size: 40px; 
+    }
+
+
+table {
+    border-collapse: collapse;
+    margin: auto;
+    
+  }
+  td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    border: 5px solid #000000;
+    font-size: 12px;
+  }
+  .aisle {
+    background: rgb(67, 66, 66);
+    border: none;
+    width: 20px;
+  }
+
+  /* Categorías */
+  .business { background: orange; }
+  .economy { background: steelblue; }
+  .lowcost { background: gray; }
+  .taken { background: red !important; }
+  .available { background: lightgreen;  }
+
+  .row-number {
+  border: none;          /* sin borde */
+  background: transparent;
+  font-weight: bold;
+  text-align: right;
+  padding-right: 20px;
+  font-size: 30px;
+}
+
+
+#legend {
+  position: fixed; 
+  left: 20px;
+  top: 250px;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 25px;
+}
+
+.legend-item {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.color {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 5px;
+  border: 2px solid #000000;
+}
+
+.color.business { background: orange; }
+.color.economy { background: steelblue; }
+.color.lowcost { background: gray; }
+.color.taken { background: red; }
+.color.available { background: lightgreen; }
+
