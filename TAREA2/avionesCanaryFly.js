@@ -1,52 +1,54 @@
 class Plane {
-    constructor(name, rows, cols, basePrice) {
-        this.name = name;
-        this.rows = rows;
-        this.cols = cols;
-        this.basePrice = basePrice;
-        this.seats = Array.from({length: rows}, () => Array(cols).fill(false));
-    }
+  constructor(name, rows, cols, basePrice) {
+    this.name = name;
+    this.rows = rows;
+    this.cols = cols;
+    this.basePrice = basePrice;
+    this.seats = Array.from({length: rows}, () => Array(cols).fill(false));
+  }
 
-    getCategory(row) {
-        if(row < 2) return 'business';
-        if(row >= this.rows - 3) return 'lowcost';
-        return 'economy';
-    }
+  getCategory(row) {
+    if (row < 2) return 'business';
+    if (row >= this.rows - 3) return 'lowcost';
+    return 'economy';
+  }
 
-    seatPrice(row) {
-        const category = this.getCategory(row);
-        let multiplier = 1;
-        if(category==='business') multiplier = 2.5;
-        if(category==='economy') multiplier = 1.2;
-        if(category==='lowcost') multiplier = 0.8;
-        return +(this.basePrice * multiplier).toFixed(2);
-    }
+  showSeatsTable() {
+  let html = `<h2>${this.name}</h2>`;
+  html += `<table>`;
 
-    showSeatsTable() {
-        let html = `<h2>${this.name}</h2>`;
-        html += `<table border="1" cellpadding="5" cellspacing="0"><tr><th>Fila</th>`;
-        for(let c=0;c<this.cols;c++){
-            html += `<th>${String.fromCharCode(65+c)}</th>`;
-        }
-        html += `</tr>`;
-        for(let r=0;r<this.rows;r++){
-            html += `<tr><td>${r+1} (${this.getCategory(r)})</td>`;
-            for(let c=0;c<this.cols;c++){
-                const free = !this.seats[r][c];
-                const color = free ? 'green' : 'red';
-                const price = this.seatPrice(r).toFixed(2)+'€';
-                html += `<td style="background-color:${color}; text-align:center">
-                            ${String.fromCharCode(65+c)}${r+1}<br>${price}
-                         </td>`;
-            }
-            html += `</tr>`;
-        }
-        html += `</table>`;
-        document.getElementById('seatsContainer').innerHTML = html;
+  for (let r = 0; r < this.rows; r++) {
+    const category = this.getCategory(r); // business, economy, lowcost
+
+    // primera celda: número de la fila coloreado
+    html += `<tr><td class="row-number" style="color:${this.getCategoryColor(category)}">${r+1}</td>`;
+
+    for (let c = 0; c < this.cols; c++) {
+      if (c === 2) { 
+        html += `<td class="aisle"></td>`; // pasillo
+      }
+
+      // asientos verdes por defecto
+      html += `<td class="seat available">
+                 ${String.fromCharCode(65+c)}${r+1}
+               </td>`;
     }
+    html += `</tr>`;
+  }
+
+  html += `</table>`;
+  document.getElementById("seatsContainer").innerHTML = html;
 }
 
-// Crear el avión de esta aerolínea
-const binterPlane = new Plane("CanaryFly – Arrecife (ACE) → Madrid (MAD)", 10, 6, 100);
+// función auxiliar para devolver color según categoría
+getCategoryColor(category) {
+  if (category === "business") return "orange";
+  if (category === "economy") return "steelblue";
+  if (category === "lowcost") return "gray";
+  return "black";
+}
+}
 
+// Ejemplo con avión 20 filas y 6 asientos por fila (3+3)
+const binterPlane = new Plane("CanaryFly – Arrecife (ACE) → Madrid (MAD)", 15, 4, 100);
 binterPlane.showSeatsTable();
