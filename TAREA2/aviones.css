@@ -21,6 +21,15 @@ body {
   transition: transform 0.2s ease;
 }
 
+#selectedSeatsIcon {
+  position: fixed; /* lo fija arriba a la derecha */
+  top: 30px;
+  right: 50px;
+  height: 60px;      /* tamaño del icono */
+  width: auto;
+  cursor: pointer;
+}
+
 h2 {
       text-align: center;
       color: #111827; 
@@ -54,6 +63,7 @@ table {
   .lowcost { background: gray; }
   .taken { background: red !important; }
   .available { background: lightgreen;  }
+  .seat.selected { background-color: green; cursor: pointer;}
 
   .row-number {
   border: none;          /* sin borde */
