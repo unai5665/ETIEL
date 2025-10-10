@@ -125,9 +125,17 @@ class Plane {
         </table>
 
         <script>
-          // Después de redibujar, hay que volver a enganchar el evento del carrito
           document.getElementById("selectedSeatsIcon").addEventListener("click", () => {
-            binterPlane.showSelectedSeats();
+            if (binterPlane.selectedSeats.length === 0) {
+              alert("No has seleccionado ningún asiento.");
+              return;
+            }
+
+            const seatsList = binterPlane.selectedSeats
+              .map(s => \`\${String.fromCharCode(65+s.col)}\${s.row+1} - €\${s.price.toFixed(2)}\`)
+              .join("\\n");
+
+            alert("Asientos seleccionados:\\n" + seatsList);
           });
         </script>
       </body>
