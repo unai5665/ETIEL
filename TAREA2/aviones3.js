@@ -140,12 +140,15 @@ class Plane {
   }
 }
 
-// Crear avión Binter
-const binterPlane = new Plane(
-  "Binter – Arrecife (ACE) → Madrid (MAD)",
-  20, // filas
-  6,  // columnas
-  44, // precio base
-  "binterPlane"
+
+
+//Crear el avión de Iberia
+const iberiaPlane = new Plane(
+  "Iberia – Arrecife (ACE) → Madrid (MAD)",
+  25, // filas
+  4,  // columnas
+  27, // precio base
+  "iberiaPlane"
 );
-binterPlane.showSeatsTable();
+iberiaPlane.showSeatsTable();
+

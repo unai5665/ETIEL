@@ -9,13 +9,13 @@ body {
 
 
 #logo {
-  position: absolute; /* lo fija arriba a la izquierda */
+  position: absolute; 
   top: 15px;
   left: 15px;
 }
 
 #logo img {
-  height: 100px;      /* tamaño del logo */
+  height: 100px;      
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -35,7 +35,7 @@ h2 {
         margin-top: 150px;
        }
 
- h1 {
+h1 {
       background-color: #0ea5e9; 
       color: white;
       padding: 20px;
@@ -49,5 +49,7 @@ h2 {
 
     h1:hover {
       background-color: #0284c7; 
+      transform: scale(0.97);
+      opacity: 0.8;
     }
 

@@ -4,18 +4,21 @@ class Plane {
     this.rows = rows;
     this.cols = cols;
     this.basePrice = basePrice;
-    this.varName = varName;
+    this.varName = varName; // 👈 nombre de variable única
 
+    // Cargar asientos desde localStorage si existen
     const storedSeats = localStorage.getItem(this.name);
     if (storedSeats) {
       this.seats = JSON.parse(storedSeats);
     } else {
+      // Generar asientos aleatorios
       this.seats = Array.from({ length: rows }, () =>
         Array.from({ length: cols }, () => Math.random() < 0.2)
       );
       localStorage.setItem(this.name, JSON.stringify(this.seats));
     }
 
+    // Cargar seleccionados de la sesión
     const storedSession = sessionStorage.getItem(this.name);
     this.selectedSeats = storedSession ? JSON.parse(storedSession) : [];
   }
@@ -49,7 +52,9 @@ class Plane {
     }
 
     if (seatIndex === -1) {
-      const confirmSeat = confirm(`Has elegido el asiento ${String.fromCharCode(65 + col)}${row + 1}. ¿Aceptar?`);
+      const confirmSeat = confirm(
+        `Has elegido el asiento ${String.fromCharCode(65 + col)}${row + 1}. ¿Aceptar?`
+      );
       if (!confirmSeat) return;
 
       const isResident = confirm("¿Eres residente canario?");
@@ -59,9 +64,13 @@ class Plane {
       this.selectedSeats.push({ row, col, price, resident: isResident });
       sessionStorage.setItem(this.name, JSON.stringify(this.selectedSeats));
 
-      alert(`Asiento ${String.fromCharCode(65 + col)}${row + 1} seleccionado. Precio final: ${price.toFixed(2)}€`);
+      alert(
+        `Asiento ${String.fromCharCode(65 + col)}${row + 1} seleccionado. Precio final: ${price.toFixed(2)}€`
+      );
     } else {
-      const cancelSeat = confirm(`¿Quieres cancelar la compra del asiento ${String.fromCharCode(65 + col)}${row + 1}?`);
+      const cancelSeat = confirm(
+        `¿Quieres cancelar la compra del asiento ${String.fromCharCode(65 + col)}${row + 1}?`
+      );
       if (cancelSeat) {
         this.selectedSeats.splice(seatIndex, 1);
         sessionStorage.setItem(this.name, JSON.stringify(this.selectedSeats));
@@ -97,10 +106,15 @@ class Plane {
     for (let r = 0; r < this.rows; r++) {
       const category = this.getCategory(r);
       html += `<tr><td style="color:${this.getCategoryColor(category)}; font-weight:bold">${r + 1}</td>`;
+
       for (let c = 0; c < this.cols; c++) {
-        if (c === Math.floor(this.cols / 2)) html += `<td style="background:#333; width:20px"></td>`;
+        if (c === Math.floor(this.cols / 2)) html += `<td style="background:#333; width:20px"></td>`; // pasillo
+
         let seatClass = this.seats[r][c] ? "red" : "lightgreen";
-        if (this.selectedSeats.some((s) => s.row === r && s.col === c)) seatClass = "green";
+        if (this.selectedSeats.some((s) => s.row === r && s.col === c)) {
+          seatClass = "green"; // seleccionado
+        }
+
         html += `<td style="background:${seatClass}; cursor:pointer;" onclick="${this.varName}.selectSeat(${r},${c})">
                    ${String.fromCharCode(65 + c)}${r + 1}
                  </td>`;
@@ -110,6 +124,7 @@ class Plane {
 
     html += `
         </table>
+
         <div id="legend">
           <div class="legend-item"><span class="color business"></span> Business: ${this.basePrice * 3}€ </div>
           <div class="legend-item"><span class="color economy"></span> Economy: ${this.basePrice * 1.5}€ </div>
@@ -124,9 +139,11 @@ class Plane {
               alert("No has seleccionado ningún asiento.");
               return;
             }
+
             const seatsList = ${this.varName}.selectedSeats
               .map(s => \`\${String.fromCharCode(65+s.col)}\${s.row+1} - €\${s.price.toFixed(2)}\`)
               .join("\\n");
+
             alert("Asientos seleccionados:\\n" + seatsList);
           });
         </script>
@@ -140,12 +157,13 @@ class Plane {
   }
 }
 
-// Crear avión Binter
-const binterPlane = new Plane(
-  "Binter – Arrecife (ACE) → Madrid (MAD)",
-  20, // filas
-  6,  // columnas
-  44, // precio base
-  "binterPlane"
+//Crear el avión de CanaryFly
+const canaryFlyPlane = new Plane(
+  "CanaryFly – Arrecife (ACE) → Madrid (MAD)",
+  10, // filas
+  8,  // columnas
+  5,  // precio base
+  "canaryFlyPlane" 
 );
-binterPlane.showSeatsTable();
+
+canaryFlyPlane.showSeatsTable();

@@ -1,15 +1,34 @@
-const h1Binter = document.getElementById("Binter");
-h1Binter.onclick = function() {
-    window.location.href = "binter.html";
-}
-const h1CanaryFly = document.getElementById("CanaryFly");
-h1CanaryFly.onclick = function() {
-    window.location.href = "canaryfly.html";
-}
-const h1Iberia = document.getElementById("Iberia");
-h1Iberia.onclick = function() {
-    window.location.href = "iberia.html";
-}
 
 
+// Función para añadir eventos a cada aerolínea
+function setupAirlineEvents(elementId, destinationPage) {
+  const el = document.getElementById(elementId);
 
+ 
+  el.onmouseover = function() {
+    console.log(`Pasando por ${elementId}`);
+  };
+
+  
+  el.onmouseout = function() {
+    console.log(`Saliendo de ${elementId}`);
+  };
+
+  
+  el.onmousedown = function() {
+    console.log(`Presionando clic en ${elementId}`);
+  };
+
+
+  el.onmouseup = function() {
+    console.log(`Soltando clic en ${elementId}`);
+    // Guardar la aerolínea seleccionada
+    sessionStorage.setItem("selectedAirline", elementId);
+    // Redirigir a la página correspondiente
+    window.location.href = destinationPage;
+  };
+}
+
+setupAirlineEvents("Binter", "binter.html");
+setupAirlineEvents("CanaryFly", "canaryfly.html");
+setupAirlineEvents("Iberia", "iberia.html");

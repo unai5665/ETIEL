@@ -9,23 +9,23 @@ body {
 
 
 #logo {
-  position: fixed; /* lo fija arriba a la izquierda */
+  position: fixed; 
   top: 15px;
   left: 15px;
 }
 
 #logo img {
-  height: 100px;      /* tamaño del logo */
+  height: 100px;     
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 #selectedSeatsIcon {
-  position: fixed; /* lo fija arriba a la derecha */
+  position: fixed; 
   top: 30px;
   right: 50px;
-  height: 60px;      /* tamaño del icono */
+  height: 60px;      
   width: auto;
   cursor: pointer;
 }
@@ -66,7 +66,7 @@ table {
   .seat.selected { background-color: green; cursor: pointer;}
 
   .row-number {
-  border: none;          /* sin borde */
+  border: none;         
   background: transparent;
   font-weight: bold;
   text-align: right;
