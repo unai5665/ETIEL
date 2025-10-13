@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle</title>
+    <script src="puzzle.js" defer></script>
+    <link rel="stylesheet" href="puzzle.css">
+    <link rel="icon" href="logo.png" type="image/png">
+</head>
+<body>
+
+    <h1>🧩 Rompecabezas Deslizante</h1>
+
+     <div id="panel-info">
+        <button id="btn-inicio">INICIO</button>
+        <button id="btn-guardar">GUARDAR PARTIDA</button>
+        <button id="btn-cargar">CONTINUAR PARTIDA</button>
+        <div id="info">
+            <p><strong>Movimientos:</strong> <span id="movimientos">0</span></p>
+            <p><strong>Tiempo:</strong> <span id="tiempo">00:00</span></p>
+            <p><strong>Mejor tiempo:</strong> <span id="mejor-tiempo">--:--</span></p>
+        </div>
+        <div id="mensaje"></div>
+    </div>
+
+
+    <table>
+        <tr>
+            <td id="1"><img src="1.png" alt="1"></td>
+            <td id="2"><img src="2.png" alt="2"></td>
+            <td id="3"><img src="3.png" alt="3"></td>
+        </tr>
+        <tr>
+            <td id="4"><img src="4.png" alt="4"></td>
+            <td id="5"><img src="5.png" alt="5"></td>
+            <td id="6"><img src="6.png" alt="6"></td>
+        </tr>
+        <tr>
+            <td id="7"><img src="7.png" alt="7"></td>
+            <td id="8"><img src="8.png" alt="8"></td>
+            <td id="empty"><img src="empty.png" alt="empty"></td>
+        </tr>
+    </table>
+    
+</body>
+</html>
