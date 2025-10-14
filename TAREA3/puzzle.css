@@ -1,0 +1,53 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Centra horizontalmente */
+    justify-content: center;  /* Centra verticalmente */
+    height: 100vh;            /* Ocupa toda la pantalla */
+    margin: 100px;
+}
+
+#puzzle {
+    border-collapse: separate;   /* Evita que los bordes se mezclen */
+    border-spacing: 4px;         /* Espaciado uniforme entre las piezas */
+    background-color: #ffffff;   /* Color del hueco entre celdas */
+    margin: 20px auto;           /* Centra la tabla */
+}
+
+#puzzle td {
+    width: 200px;
+    height: 200px;
+    border: none;                /* Quitamos el borde, ya usamos separación */
+    padding: 0;                  /* Elimina cualquier relleno interno */
+    cursor: pointer;
+    background-color: #ffffff;   /* Fondo blanco para el hueco vacío */
+}
+
+#puzzle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;           /* Ajusta bien sin deformar */
+    display: block;              /* Elimina el espacio debajo de la imagen */
+}
+
+
+.vacio {
+    background-color: #ffffff;
+}
+
+#panel-info {
+    margin-bottom: 15px;
+}
+
+#mensaje {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #006600;
+}
