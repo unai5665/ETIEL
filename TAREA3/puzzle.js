@@ -1,6 +1,4 @@
-// =============================
-// OBJETO PRINCIPAL DEL JUEGO
-// =============================
+
 const PUZZLE = {
     ORDEN_INICIAL: ["1","2","3","4","5","6","7","8","empty"],
     ordenActual: [],
@@ -10,9 +8,7 @@ const PUZZLE = {
     mejorTiempo: localStorage.getItem("mejorTiempo") || null,
 };
 
-// =============================
-// ELEMENTOS DEL DOM
-// =============================
+
 const BOTON_INICIO = document.getElementById("btn-inicio");
 const BOTON_GUARDAR = document.getElementById("btn-guardar");
 const BOTON_CARGAR = document.getElementById("btn-cargar");
@@ -22,9 +18,7 @@ const SPAN_TIEMPO = document.getElementById("tiempo");
 const SPAN_MEJOR = document.getElementById("mejor-tiempo");
 const MENSAJE = document.getElementById("mensaje");
 
-// =============================
-// FUNCIONES AUXILIARES
-// =============================
+
 
 // Mezclar array
 function mezclarArray(array) {
@@ -66,22 +60,53 @@ function formatearTiempo(segundos) {
     return `${min}:${sec}`;
 }
 
-// =============================
-// FUNCIONES PRINCIPALES
-// =============================
 
-// Iniciar juego
+// Obtener posiciones vecinas válidas del hueco
+function obtenerVecinos(posVacio) {
+    const vecinos = [];
+    const filas = 3;
+    const col = posVacio % filas;
+    const fila = Math.floor(posVacio / filas);
+
+    if (fila > 0) vecinos.push(posVacio - filas);      // arriba
+    if (fila < filas - 1) vecinos.push(posVacio + filas); // abajo
+    if (col > 0) vecinos.push(posVacio - 1);           // izquierda
+    if (col < filas - 1) vecinos.push(posVacio + 1);   // derecha
+
+    return vecinos;
+}
+
+// Mezclar el puzzle realizando movimientos válidos aleatorios
+function mezclarPuzzle(pasos = 100) {
+    let orden = [...PUZZLE.ORDEN_INICIAL];
+    let posVacio = orden.indexOf("empty");
+
+    for (let i = 0; i < pasos; i++) {
+        const vecinos = obtenerVecinos(posVacio);
+        const aleatorio = vecinos[Math.floor(Math.random() * vecinos.length)];
+
+        // Intercambiar el hueco con un vecino aleatorio
+        [orden[posVacio], orden[aleatorio]] = [orden[aleatorio], orden[posVacio]];
+        posVacio = aleatorio;
+    }
+
+    return orden;
+}
+
+// Iniciar juego (usando mezcla realista)
 function iniciarJuego() {
-    PUZZLE.ordenActual = mezclarArray([...PUZZLE.ORDEN_INICIAL]);
+    PUZZLE.ordenActual = mezclarPuzzle(100); // mezclar con 100 movimientos válidos
     PUZZLE.movimientos = 0;
     PUZZLE.tiempo = 0;
     MENSAJE.textContent = "";
     SPAN_MOV.textContent = "0";
+
     clearInterval(PUZZLE.temporizador);
     PUZZLE.temporizador = setInterval(() => {
         PUZZLE.tiempo++;
         SPAN_TIEMPO.textContent = formatearTiempo(PUZZLE.tiempo);
     }, 1000);
+
     dibujarPuzzle();
 }
 
