@@ -42,7 +42,7 @@ function dibujarPuzzle() {
 function verificarGanador() {
     if (PUZZLE.ordenActual.join() === PUZZLE.ORDEN_INICIAL.join()) {
         clearInterval(PUZZLE.temporizador);
-        MENSAJE.textContent = `🎉 ¡Completado en ${PUZZLE.movimientos} movimientos y ${formatearTiempo(PUZZLE.tiempo)}!`;
+        MENSAJE.textContent = `¡Completado en ${PUZZLE.movimientos} movimientos y ${formatearTiempo(PUZZLE.tiempo)}!`;
 
         // Guardar mejor tiempo
         if (!PUZZLE.mejorTiempo || PUZZLE.tiempo < PUZZLE.mejorTiempo) {
@@ -53,7 +53,7 @@ function verificarGanador() {
     }
 }
 
-// Formatear segundos a mm:ss
+
 function formatearTiempo(segundos) {
     const min = String(Math.floor(segundos / 60)).padStart(2, "0");
     const sec = String(segundos % 60).padStart(2, "0");
@@ -61,7 +61,7 @@ function formatearTiempo(segundos) {
 }
 
 
-// Obtener posiciones vecinas válidas del hueco
+
 function obtenerVecinos(posVacio) {
     const vecinos = [];
     const filas = 3;
@@ -81,17 +81,35 @@ function mezclarPuzzle(pasos = 100) {
     let orden = [...PUZZLE.ORDEN_INICIAL];
     let posVacio = orden.indexOf("empty");
 
+    // Mezclar con movimientos válidos aleatorios
     for (let i = 0; i < pasos; i++) {
         const vecinos = obtenerVecinos(posVacio);
         const aleatorio = vecinos[Math.floor(Math.random() * vecinos.length)];
 
-        // Intercambiar el hueco con un vecino aleatorio
         [orden[posVacio], orden[aleatorio]] = [orden[aleatorio], orden[posVacio]];
         posVacio = aleatorio;
     }
 
+    // Asegurar que el espacio vacío termine en la esquina inferior derecha
+    const posicionObjetivo = 8; // esquina inferior derecha
+    while (posVacio !== posicionObjetivo) {
+        const vecinos = obtenerVecinos(posVacio);
+        // Elige un vecino que acerque al vacío hacia la esquina inferior derecha
+        let mejorMovimiento = vecinos[Math.floor(Math.random() * vecinos.length)];
+
+        // Opcional: intenta mover hacia abajo o derecha si es posible
+        if (posVacio < posicionObjetivo) {
+            const preferido = vecinos.find(v => v > posVacio);
+            if (preferido !== undefined) mejorMovimiento = preferido;
+        }
+
+        [orden[posVacio], orden[mejorMovimiento]] = [orden[mejorMovimiento], orden[posVacio]];
+        posVacio = mejorMovimiento;
+    }
+
     return orden;
 }
+
 
 // Iniciar juego (usando mezcla realista)
 function iniciarJuego() {
@@ -140,7 +158,7 @@ function guardarPartida() {
         tiempo: PUZZLE.tiempo
     };
     localStorage.setItem("partidaGuardada", JSON.stringify(estado));
-    MENSAJE.textContent = "💾 Partida guardada correctamente.";
+    MENSAJE.textContent = "Partida guardada correctamente.";
 }
 
 // Cargar partida
@@ -153,7 +171,7 @@ function cargarPartida() {
         PUZZLE.tiempo = datos.tiempo;
         SPAN_MOV.textContent = PUZZLE.movimientos;
         SPAN_TIEMPO.textContent = formatearTiempo(PUZZLE.tiempo);
-        MENSAJE.textContent = "🔄 Partida cargada.";
+        MENSAJE.textContent = "Partida cargada.";
         clearInterval(PUZZLE.temporizador);
         PUZZLE.temporizador = setInterval(() => {
             PUZZLE.tiempo++;
@@ -177,7 +195,7 @@ TABLA.addEventListener("click", (e) => {
     }
 });
 
-// Mostrar mejor tiempo inicial
+// Mostrar mejor tiempo si existe
 if (PUZZLE.mejorTiempo) {
     SPAN_MEJOR.textContent = formatearTiempo(PUZZLE.mejorTiempo);
 }
