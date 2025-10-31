@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Árbol de Directorios - Proyecto</title>
+  <link rel="stylesheet" href="tarea4.css">
+  
+</head>
+<body>
+  <main id="app">
+    <h1>Árbol de Directorios</h1>
+
+    <!-- FORMULARIO PRINCIPAL: crear archivo/carpeta y filtrar -->
+    <form id="controlForm" autocomplete="off">
+      <fieldset>
+        <legend>Crear elemento</legend>
+        <label for="nameInput">Nombre (archivo o carpeta):</label>
+        <input id="nameInput" type="text" placeholder="ej: foto.jpg o documentos" required>
+
+        <label for="typeSelect">Tipo:</label>
+        <select id="typeSelect">
+          <option value="file">Archivo</option>
+          <option value="folder" selected>Carpeta</option>
+        </select>
+
+        <button id="createBtn" type="submit">Crear</button>
+      </fieldset>
+    </form>
+
+    <form id="filterForm" autocomplete="off">
+      <fieldset>
+        <legend>Filtrar / Buscar</legend>
+        <label for="filterInput">Filtrar por nombre:</label>
+        <input id="filterInput" type="text" placeholder="Escribe para filtrar...">
+        <small>Presiona TAB para autocompletar si existe UNA sola coincidencia.</small>
+      </fieldset>
+    </form>
+
+    <!-- CONTENEDOR DEL ÁRBOL -->
+    <section id="treeContainer" aria-label="Árbol de directorios">
+      <!-- El árbol se renderiza aquí -->
+    </section>
+
+    <footer>
+      <p>Nota: La carpeta raíz "/" no puede eliminarse. No se puede borrar una carpeta que no esté vacía.</p>
+    </footer>
+  </main>
+
+  <script src="tarea4.js"></script>
+</body>
+</html>
