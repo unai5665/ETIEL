@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta en Tienda Online</title>
+    <link rel="stylesheet" href="tarea5.css">
+    <script src="tarea5.js" defer></script>
+</head>
+<body>
+    <h1>Formulario de Alta en la Tienda</h1>
+        <form id="formulario" novalidate>
+        <label>Nombre
+            <input type ="text" id="nombre" placeholder="Nombre">
+            <span class=""></span>
+        </label>
+        <label>Apellidos:
+            <input type="text" id="apellidos" placeholder="Ej: García López">
+            <span class="mensaje-error"></span>
+        </label>
+
+        <label>DNI/NIE:
+            <input type="text" id="dni" placeholder="Ej: 12345678Z o X1234567L">
+            <span class="mensaje-error"></span>
+        </label>
+
+        <label>Fecha de Nacimiento:
+            <input type="text" id="fechaNacimiento" placeholder="DD/MM/AAAA">
+            <span class="mensaje-error"></span>
+        </label>
+
+         <label>Código Postal:
+                <input type="text" id="codigoPostal" placeholder="Ej: 28001">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>Email:
+                <input type="email" id="email" placeholder="correo@dominio.com">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>Teléfono Fijo:
+                <input type="text" id="telefonoFijo" placeholder="Ej: 912345678">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>Teléfono Móvil:
+                <input type="text" id="telefonoMovil" placeholder="Ej: 612345678">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>IBAN:
+                <input type="text" id="iban" placeholder="Ej: ES7620770024003102575766">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>Tarjeta de Crédito:
+                <input type="text" id="tarjeta" placeholder="Ej: 4111111111111111">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>Contraseña:
+                <input type="password" id="contrasena">
+                <span class="mensaje-error"></span>
+            </label>
+
+            <label>Repetir Contraseña:
+                <input type="password" id="repetirContrasena">
+                <span class="mensaje-error"></span>
+            </label>
+
+             <!-- Botones -->
+            <div class="botones">
+                <button type="button" id="guardar">GUARDAR</button>
+                <button type="button" id="recuperar">RECUPERAR</button>
+            </div>
+        
+
+        </form>
+    
+</body>
+</html>
