@@ -23,7 +23,7 @@ button:active{transform:translateY(1px);}
 ul.dirList{list-style:none;margin:0;padding-left:16px;}
 li.node{padding:6px 8px;margin:2px 0;border-radius:6px;display:flex;align-items:center;gap:8px;}
 li.node.folder{background:#f0f8ff;}
-li.node.file{background:#fff;}
+li.node.file{background:#ffffff;}
 button.icon{background:transparent;border:0;cursor:pointer;font-size:0.9rem;padding:4px;border-radius:4px;}
 button.icon:hover{background:rgba(0,0,0,0.03);}
 
@@ -38,12 +38,16 @@ button.icon:hover{background:rgba(0,0,0,0.03);}
 .deleteBtn{color:var(--danger);font-weight:700;}
 
 /* Indentation for nested lists */
-ul.dirList ul.dirList{padding-left:20px;border-left:1px dashed #eaf4ff;margin-left:8px;padding-top:6px;padding-bottom:6px;}
+ul.dirList ul.dirList{padding-left:20px;border-left:1px dashed #ffffff;margin-left:8px;padding-top:6px;padding-bottom:6px;}
 
 /* focus styles */
 [nameInputFocus]{outline:2px solid rgba(11,105,255,0.12);}
 
-/* Responsive */
-@media (min-width:720px){
-  .controlsSmall{display:flex;}
+.addBtn {
+  color: #2ecc71; /* Verde suave */
+  font-weight: bold;
+}
+
+.addBtn:hover {
+  background: rgba(46, 204, 113, 0.1); /* Fondo verde claro al pasar el ratón */
 }
