@@ -2,9 +2,9 @@ const patrones = {
     nombre: /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$/,
     apellidos: /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)?$/,
     dni: /^\d{8}[A-Z]$/,
-    fechaNacimiento: /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/,
+    fechaNacimiento: /^(?:31\/(0[13578]|1[02])\/(19|20)\d{2}|(29|30)\/(0[13-9]|1[0-2])\/(19|20)\d{2}|29\/02\/((19|20)(?:0[48]|[2468][048]|[13579][26]))|(?:0[1-9]|1\d|2[0-8])\/(0[1-9]|1[0-2])\/(19|20)\d{2})$/,
     codigoPostal: /^(0[1-9]|[1-4][0-9]|5[0-2])\d{3}$/,
-    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    email: /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,7}$/,
     telefonoFijo: /^(?:\+34|0034)?[89]\d{8}$/,
     telefonoMovil: /^(?:\+34|0034)?[67]\d{8}$/,
     iban: /^ES\d{22}$/,
@@ -46,7 +46,7 @@ function validarContrasenas() {
         pass2.classList.add('incorrecto');
         pass1.classList.remove('correcto');
         pass2.classList.remove('correcto');
-        error2.textContent = "Las contraseñas no coinciden o no cumplen requisitos.";
+        error2.textContent = "Las contraseñas no coinciden o no cumplen requisitos.(Letras mayusculas y minusculas, números y símbolos, mínimo 12 caracteres, no se permiten ?,+,=,.)";
         return false;
     } else {
         pass1.classList.add('correcto');
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     validarCampo(input, patrones.email, "Correo electrónico inválido.");
                     break;
                 case "telefonoFijo":
-                    validarCampo(input, patrones.telefonoFijo, "Debe empezar por 9 y tener 9 dígitos.");
+                    validarCampo(input, patrones.telefonoFijo, "Debe empezar por 9 o 8 y tener 9 dígitos.");
                     break;
                 case "telefonoMovil":
                     validarCampo(input, patrones.telefonoMovil, "Debe empezar por 6 o 7 y tener 9 dígitos.");
