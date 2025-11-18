@@ -12,12 +12,10 @@ const patrones = {
     contrasena: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{12,}$/
 };
 
-// === OBJETO DE DATOS === //
 const datosUsuario = {};
+let passReal = "";
+let passReal2 = "";
 
-// === FUNCIONES === //
-
-// Función para validar un campo con su regex
 function validarCampo(input, regex, mensajeError) {
     const valor = input.value.trim();
     const valido = regex.test(valor);
@@ -35,18 +33,18 @@ function validarCampo(input, regex, mensajeError) {
     return valido;
 }
 
-// Validación específica de contraseñas
+// VALIDACIÓN DE CONTRASEÑAS
 function validarContrasenas() {
     const pass1 = document.querySelector("#contrasena");
     const pass2 = document.querySelector("#repetirContrasena");
     const error2 = pass2.nextElementSibling;
 
-    if (pass1.value !== pass2.value || !patrones.contrasena.test(pass1.value)) {
+    if (passReal !== passReal2 || !patrones.contrasena.test(passReal)) {
         pass1.classList.add('incorrecto');
         pass2.classList.add('incorrecto');
         pass1.classList.remove('correcto');
         pass2.classList.remove('correcto');
-        error2.textContent = "Las contraseñas no coinciden o no cumplen requisitos.(Letras mayusculas y minusculas, números y símbolos, mínimo 12 caracteres, no se permiten ?,+,=,.)";
+        error2.textContent = "Las contraseñas no coinciden o no cumplen requisitos.(12 caracteres, letra, número y símbolo; no se permiten estos simbolos .?=*)";
         return false;
     } else {
         pass1.classList.add('correcto');
@@ -57,15 +55,62 @@ function validarContrasenas() {
         return true;
     }
 }
+function ocultarContrasena(input, almacen) {
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
 
-// === EVENTOS === //
+    const valorAnterior = input.dataset.real || "";
+    let real = valorAnterior;
+
+    // Si se ha seleccionado texto y se pulsa DEL o se escribe algo
+    if (start !== end) {
+        // borrar en la contraseña real
+        real = real.slice(0, start) + real.slice(end);
+        almacen = real;
+    }
+
+    const valorVisible = input.value;
+
+    // Determinar si se añadió o eliminó
+    if (valorVisible.length > almacen.length) {
+        // Añadido un carácter nuevo
+        const nuevoCaracter = valorVisible.charAt(valorVisible.length - 1);
+        almacen += nuevoCaracter;
+    } else if (valorVisible.length < almacen.length) {
+        // Eliminado desde final
+        almacen = almacen.slice(0, -1);
+    }
+
+    // Guardar contraseña real en DATASET
+    input.dataset.real = almacen;
+
+    // Mostrar asteriscos
+    input.value = "*".repeat(almacen.length);
+
+    return almacen;
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const formulario = document.querySelector("#formulario");
     const inputs = formulario.querySelectorAll("input");
 
-    // Validación en tiempo real
+    // === VALIDACIÓN EN TIEMPO REAL ===
     inputs.forEach(input => {
         input.addEventListener("keyup", () => {
+
+            if (input.id === "contrasena") {
+                passReal = ocultarContrasena(input, passReal);
+                validarContrasenas();
+                return;
+            }
+
+            if (input.id === "repetirContrasena") {
+                passReal2 = ocultarContrasena(input, passReal2);
+                validarContrasenas();
+                return;
+            }
+
             switch (input.id) {
                 case "nombre":
                     validarCampo(input, patrones.nombre, "Debe empezar con mayúscula y sólo contener letras.");
@@ -74,22 +119,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     validarCampo(input, patrones.apellidos, "Máx. dos apellidos con mayúscula inicial.");
                     break;
                 case "dni":
-                    validarCampo(input, patrones.dni, "Formato DNI/NIE incorrecto.");
+                    validarCampo(input, patrones.dni, "Formato DNI incorrecto.");
                     break;
                 case "fechaNacimiento":
                     validarCampo(input, patrones.fechaNacimiento, "Formato DD/MM/AAAA.");
                     break;
                 case "codigoPostal":
-                    validarCampo(input, patrones.codigoPostal, "Código postal español (5 dígitos).");
+                    validarCampo(input, patrones.codigoPostal, "Código postal español.");
                     break;
                 case "email":
                     validarCampo(input, patrones.email, "Correo electrónico inválido.");
                     break;
                 case "telefonoFijo":
-                    validarCampo(input, patrones.telefonoFijo, "Debe empezar por 9 o 8 y tener 9 dígitos.");
+                    validarCampo(input, patrones.telefonoFijo, "Debe empezar por 9 u 8.");
                     break;
                 case "telefonoMovil":
-                    validarCampo(input, patrones.telefonoMovil, "Debe empezar por 6 o 7 y tener 9 dígitos.");
+                    validarCampo(input, patrones.telefonoMovil, "Debe empezar por 6 o 7.");
                     break;
                 case "iban":
                     validarCampo(input, patrones.iban, "IBAN español: ES + 22 dígitos.");
@@ -97,20 +142,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 case "tarjeta":
                     validarCampo(input, patrones.tarjeta, "Debe tener 16 dígitos.");
                     break;
-                case "contrasena":
-                case "repetirContrasena":
-                    validarContrasenas();
-                    break;
             }
         });
     });
 
-    // Botón GUARDAR
+    // === BOTÓN GUARDAR ===
     document.querySelector("#guardar").addEventListener("click", () => {
         let valido = true;
 
         inputs.forEach(input => {
-            if (input.id === "repetirContrasena") return;
+            if (input.id === "contrasena" || input.id === "repetirContrasena") return;
+
             const regex = patrones[input.id];
             if (regex) {
                 if (!validarCampo(input, regex, "Campo inválido.")) valido = false;
@@ -121,30 +163,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (valido) {
             inputs.forEach(input => {
-                datosUsuario[input.id] = input.value.trim();
+                if (input.id === "contrasena") datosUsuario.contrasena = passReal;
+                else if (input.id === "repetirContrasena") datosUsuario.repetirContrasena = passReal2;
+                else datosUsuario[input.id] = input.value.trim();
             });
+
             sessionStorage.setItem("usuario", JSON.stringify(datosUsuario));
-            alert("Datos guardados correctamente en SessionStorage.");
+            alert("Datos guardados en SessionStorage.");
         } else {
-            alert("Por favor, corrige los errores antes de guardar.");
+            alert("Corrige los errores antes de guardar.");
         }
     });
 
-    // Botón RECUPERAR
+    // === BOTÓN RECUPERAR ===
     document.querySelector("#recuperar").addEventListener("click", () => {
         const recuperado = sessionStorage.getItem("usuario");
         if (!recuperado) {
-            alert("No hay datos almacenados.");
+            alert("No hay datos guardados.");
             return;
         }
 
         const datos = JSON.parse(recuperado);
+
+        passReal = datos.contrasena || "";
+        passReal2 = datos.repetirContrasena || "";
+
         inputs.forEach(input => {
-            input.value = datos[input.id] || "";
+            if (input.id === "contrasena") input.value = "*".repeat(passReal.length);
+            else if (input.id === "repetirContrasena") input.value = "*".repeat(passReal2.length);
+            else input.value = datos[input.id] || "";
+
             const regex = patrones[input.id];
             if (regex) validarCampo(input, regex, "");
         });
+
         validarContrasenas();
-        alert("Datos recuperados y validados.");
+        alert("Datos recuperados.");
     });
 });
